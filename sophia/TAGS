@@ -1,0 +1,792 @@
+
+test/common.c,885
+static char *dbrep dbrep13,131
+cmp(16,180
+env(25,387
+env_opts(34,584
+open_ro_creat(52,1107
+open_rdwr(64,1389
+open_rdwr_creat(76,1655
+open_reopen(89,1959
+open_reopen_ro(105,2324
+set(122,2742
+set_get(137,3110
+set_get_zerovalue(158,3635
+replace(178,4129
+replace_get(194,4553
+set_delete(221,5256
+set_delete_get(237,5673
+set_delete_set_get(256,6182
+delete(280,6820
+delete_set_get(295,7173
+cursor(318,7754
+fetch_gte_empty(334,8140
+fetch_gt_empty(352,8587
+fetch_lte_empty(370,9032
+fetch_lt_empty(388,9479
+fetch_kgte_empty(406,9924
+fetch_kgt_empty(425,10395
+fetch_klte_empty(444,10864
+fetch_klt_empty(463,11335
+fetch_gte(482,11804
+fetch_gt(521,12966
+fetch_lte(560,14126
+fetch_lt(599,15288
+fetch_kgte(638,16448
+fetch_kgt(674,17452
+fetch_klte(704,18279
+fetch_klt(739,19283
+fetch_after_end(769,20111
+rotate_empty(812,21373
+rotate(829,21856
+main(867,23192
+
+test/limit.c,97
+static char *dbrep dbrep13,131
+cmp(16,180
+limit_key(25,387
+limit_value(41,781
+main(57,1172
+
+test/recover.c,1224
+static char *dbrep dbrep13,131
+cmp(16,180
+recover_log_set_get(25,387
+recover_log_replace_get(65,1398
+recover_log_set_get_replace_get(95,2167
+recover_log_delete_get(139,3235
+recover_log_delete_set_get(162,3853
+recover_log_fetch_gte(196,4740
+recover_log_fetch_lte(239,6015
+recover_log_fetch_kgte(282,7290
+recover_log_fetch_kgt(321,8406
+recover_log_fetch_klte(355,9346
+recover_log_fetch_klt(394,10462
+recover_log_n_get(436,11630
+recover_log_n_replace(471,12410
+recover_page_set_get(517,13535
+recover_page_replace_get(567,14901
+recover_page_set_get_replace_get(604,15942
+recover_page_delete_get(669,17604
+recover_page_delete_set_get(701,18593
+recover_page_fetch_gte(762,20543
+recover_page_fetch_lte(807,21889
+recover_page_fetch_kgte(852,23235
+recover_page_fetch_kgt(893,24422
+recover_page_fetch_klte(929,25433
+recover_page_fetch_klt(970,26620
+recover_page_n_get(1006,27631
+recover_page_n_replace(1044,28531
+recover_page_log_fetch_gte(1089,29588
+recover_page_log_fetch_lte(1154,31617
+recover_page_log_fetch_kgte(1219,33646
+recover_page_log_fetch_kgt(1281,35542
+recover_page_log_fetch_klte(1338,37262
+recover_page_log_fetch_klt(1395,38984
+recover_page_log_n_replace(1447,40530
+main(1510,42035
+
+test/crash.c,413
+static char *dbrep dbrep16,186
+static spa a;17,216
+cmp(20,249
+log_empty(29,456
+log_empty_incomplete(50,989
+log_badrecord(70,1512
+log_badrecord_incomplete(111,2506
+log_1_badrecord_2_goodrecord(152,3537
+log_noeof(198,4712
+log_noeof_complete(246,5936
+db_empty(289,7040
+db_empty_incomplete(313,7644
+db_badpage(337,8281
+log_incomplete_db_incomplete(365,8942
+log_db_incomplete(414,10245
+main(472,11775
+
+test/i.c,405
+static spa a;15,165
+static inline spv *newv(newv17,180
+static inline void freekey(29,429
+cmp(34,504
+init(43,711
+set(50,806
+set_split(66,1064
+set_get(82,1329
+set_get_split(105,1729
+set_fetchfwd(128,2137
+set_fetchbkw(156,2641
+set_fetchfwd_split(182,3080
+set_fetchbkw_split(207,3510
+set_del(236,4039
+set_del_split(272,4774
+set_delbkw_split(308,5517
+set_delrnd_split(344,6264
+main(385,7073
+
+test/test.h,109
+#define SP_TEST_H_2,19
+#define t(22,316
+#define test(30,456
+exists(39,583
+static inline int rmrf(46,768
+
+test/merge.c,611
+static char *dbrep dbrep13,131
+cmp(16,180
+merge_liveonly(25,387
+merge_phase0(48,1111
+merge_phase1(82,2243
+merge_phase1gc(131,3910
+merge_phase1n(180,5579
+merge_phase1ngc(226,7169
+merge_delete(272,8761
+merge_deletegc(321,10148
+merge_delete_log_n(369,11491
+merge_delete_page_n(414,12580
+merge_delete_page_log_n(459,13658
+merge_delete_page_log_n_even(506,14820
+merge_delete_page_log_n_extra(555,15945
+merge_delete_page_log_n_fetch_gte(608,17191
+merge_delete_page_log_n_fetch_lte(681,19306
+merge_delete_page_log_n_fetch_kgte(754,21421
+merge_delete_page_log_n_fetch_klte(808,22855
+main(867,24453
+
+db/e.h,334
+#define SP_E_H_2,16
+typedef struct spe spe;12,124
+	SPENONE,15,156
+	SPE,16,166
+	SPEOOM,17,210
+	SPESYS,18,240
+	SPEIO 19,271
+struct spe 22,309
+	spspinlock lock;23,322
+	int type;24,340
+	int errno_;25,351
+	char e[e26,364
+static inline void sp_einit(29,382
+static inline void sp_efree(36,495
+static inline int sp_eis(40,560
+
+db/meta.h,1221
+#define SP_META_H_2,19
+typedef struct splogh splogh;14,145
+typedef struct speofh speofh;15,175
+typedef struct sppageh sppageh;16,205
+typedef struct spvh spvh;17,237
+#define SPEOF 19,264
+#define SPMAGIC 20,292
+struct splogh 22,321
+	uint32_t magic;23,337
+	uint8_t version[version24,354
+} sppacked;25,375
+struct speofh 27,388
+	uint32_t magic;28,404
+} sppacked;29,421
+struct sppageh 31,434
+	uint32_t crc;32,451
+	uint64_t id;33,466
+	uint16_t count;34,480
+	uint32_t size;35,497
+	uint32_t bsize;36,513
+} sppacked;37,530
+struct spvh 39,543
+	uint32_t crc;40,557
+	uint32_t size;41,572
+	uint32_t voffset;42,588
+	uint32_t vsize;43,607
+	uint8_t  flags;44,624
+	char key[key45,641
+} sppacked;46,654
+typedef struct spv spv;50,684
+typedef struct sppage sppage;51,708
+#define SPSET 53,739
+#define SPDEL 54,755
+struct spv 56,772
+	uint32_t epoch;57,785
+	uint32_t crc;58,802
+	uint16_t size;59,852
+	uint8_t  flags;60,868
+	char key[key61,885
+} sppacked;64,936
+struct sppage 66,949
+	uint64_t id;67,965
+	uint64_t offset;68,979
+	void *epoch;epoch69,997
+	uint32_t size;70,1011
+	spv *min;min71,1027
+	spv *max;max72,1038
+	splist link;73,1049
+} sppacked;74,1063
+sp_vv(77,1096
+sp_vvsize(82,1183
+
+db/file.h,483
+#define SP_FILE_H_2,19
+typedef struct spfile spfile;12,130
+struct spfile 14,161
+	spa *a;a15,177
+	int creat;16,186
+	uint64_t used;17,198
+	uint64_t size;18,214
+	uint64_t svp;19,230
+	char *file;file20,245
+	int fd;21,258
+	char *map;map22,267
+	struct iovec iov[iov23,279
+	int iovc;24,301
+sp_fileinit(31,384
+sp_filesvp(38,490
+sp_mapepoch(51,780
+sp_mapepochnew(58,978
+sp_mapuse(66,1226
+sp_maprlb(72,1331
+sp_mapinbound(77,1394
+sp_logadd(92,1757
+sp_epochrm(100,1935
+
+db/gc.h,22
+#define SP_GC_H_2,17
+
+db/track.h,336
+#define SP_TRACK_H_2,20
+typedef struct sptrack sptrack;12,132
+struct sptrack 14,165
+	spa *a;a15,182
+	uint64_t max;16,191
+	uint64_t *i;i17,206
+	int count;18,220
+	int size;19,232
+sp_trackinit(23,265
+static inline void sp_trackfree(36,507
+sp_trackinsert(44,652
+sp_trackresize(60,918
+sp_trackset(77,1201
+sp_trackhas(86,1396
+
+db/ref.h,553
+#define SP_KEY_H_2,18
+typedef struct spref spref;12,128
+typedef struct sprefset sprefset;13,156
+#define SPREFNONE 15,191
+#define SPREFD 16,211
+#define SPREFM 17,231
+struct spref 19,252
+	uint8_t type;20,267
+		spvh *vh;vh22,291
+		spv *v;v23,303
+	} v;24,313
+} sppacked;25,319
+struct sprefset 27,332
+	spref *r;r28,350
+	int used;29,361
+	int max;30,372
+sp_refk(34,406
+sp_refksize(43,556
+sp_refv(52,708
+sp_refvsize(61,877
+sp_refisdel(70,1033
+sp_refsetinit(82,1250
+sp_refsetfree(92,1451
+sp_refsetadd(100,1561
+sp_refsetreset(107,1681
+
+db/util.c,329
+char *sp_memdup(sp_memdup12,109
+sppage *sp_pagenew(sp_pagenew21,273
+void sp_pageattach(31,505
+void sp_pagedetach(36,623
+void sp_pagefree(41,711
+sp_vnewof(49,866
+spv *sp_vnew(sp_vnew60,1110
+spv *sp_vnewv(sp_vnewv64,1193
+spv *sp_vnewh(sp_vnewh74,1497
+spv *sp_vdup(sp_vdup82,1656
+spv *sp_vdupref(sp_vdupref91,1836
+
+db/cat.h,214
+#define SP_CAT_H_2,18
+typedef struct spcat spcat;12,128
+struct spcat 14,157
+	spa *a;a15,172
+	sppage **i;i16,181
+	uint32_t count;17,194
+	uint32_t top;18,211
+	spcmpf cmp;19,226
+	void *cmparg;cmparg20,239
+
+db/core.h,1358
+#define SP_CORE_H_2,19
+#define SP_VERSION_MAJOR 12,130
+#define SP_VERSION_MINOR 13,157
+typedef struct sp sp;15,185
+typedef struct spenv spenv;16,207
+enum spmagic 18,236
+	SPMCUR 19,251
+	SPMCUR  = 0x15481936L,x15481936L19,251
+	SPMENV 20,275
+	SPMENV  = 0x06154834L,x06154834L20,275
+	SPMDB 21,299
+	SPMDB   = 0x00fec0feL,x00fec0feL21,299
+	SPMNONE 22,323
+	SPMNONE = 0LL22,323
+typedef enum spmagic spmagic;25,341
+struct spenv 27,372
+	spmagic m;28,387
+	spe e;29,399
+	int inuse;30,407
+	spallocf alloc;31,419
+	void *allocarg;allocarg32,436
+	spcmpf cmp;33,453
+	void *cmparg;cmparg34,466
+	uint32_t flags;35,481
+	char *dir;dir36,498
+	int merge;37,510
+	uint32_t mergewm;38,522
+	uint32_t page;39,541
+	uint32_t dbnewsize;40,557
+	float dbgrow;41,578
+	int gc;42,593
+	float gcfactor;43,602
+struct sp 46,623
+	spmagic m;47,635
+	spenv *e;e48,647
+	spa a;49,658
+	sprep rep;50,666
+	spi *i,i51,678
+	spi *i, i0,51,678
+	spi *i, i0, i1;51,678
+	int iskip;52,695
+	uint64_t psn;53,752
+	spcat s;54,800
+	volatile int stop;55,810
+	sptask merger;56,830
+	sprefset refs;57,846
+	int lockc;58,911
+	spspinlock lockr;59,962
+	spspinlock locks;60,1005
+	spspinlock locki;61,1043
+static inline int sp_active(66,1106
+sp_e(71,1182
+sp_ee(80,1327
+sp_glock(89,1474
+sp_gunlock(100,1644
+sp_iskipset(111,1824
+sp_ipair(118,1933
+sp_iswap(123,2017
+
+db/recover.h,27
+#define SP_RECOVER_H_2,22
+
+db/i.h,724
+#define SP_I_H_2,16
+typedef struct spipage spipage;12,124
+typedef struct spi spi;13,156
+typedef struct spii spii;14,180
+struct spipage 16,207
+	uint16_t count;17,224
+	spv *i[i18,241
+} sppacked;19,252
+struct spi 21,265
+	spa *a;a22,278
+	int pagesize;23,287
+	spipage **i;i24,302
+	uint32_t itop;25,316
+	uint32_t icount;26,332
+	uint32_t count;27,350
+	spcmpf cmp;28,367
+	void *cmparg;cmparg29,380
+struct spii 32,399
+	spi *i;i33,413
+	long long p,34,422
+	long long p, n;34,422
+sp_idel(45,668
+sp_iget(50,772
+sp_imax(55,861
+sp_ifirst(62,1006
+sp_ilast(68,1074
+sp_iopen(74,1194
+sp_ihas(80,1272
+sp_ivalset(87,1429
+sp_ival(92,1514
+sp_inext(99,1637
+sp_iprev(116,1906
+sp_iinv(134,2181
+sp_iset(144,2345
+
+db/sp.c,801
+cmpstd(13,133
+static inline void sp_envinit(19,335
+static inline void sp_envfree(38,680
+static inline int sp_envvalidate(46,794
+void *sp_env(sp_env66,1289
+static int sp_ctlenv(74,1418
+static int sp_ctldb(126,2537
+int sp_ctl(139,2822
+int sp_rotate(164,3309
+static inline int sp_closerep(195,4169
+static inline int sp_close(241,5430
+static void *merger(merger265,5917
+void *sp_open(sp_open285,6258
+int sp_destroy(366,8205
+char *sp_error(sp_error404,8729
+sp_do(429,9047
+int sp_set(499,10741
+int sp_delete(514,11233
+sp_checkro(528,11621
+int sp_get(537,11803
+void *sp_cursor(sp_cursor546,12024
+int sp_fetch(562,12423
+const char *sp_key(sp_key570,12562
+size_t sp_keysize(577,12657
+const char *sp_value(sp_value584,12755
+size_t sp_valuesize(591,12866
+void sp_stat(598,12966
+
+db/cat.c,275
+static inline int sp_catensure(12,109
+int sp_catinit(22,303
+void sp_catfree(34,553
+cmppage(46,763
+sp_catsearch(59,1118
+int sp_catset(78,1474
+int sp_catdel(100,1891
+cmpkey(111,2136
+sp_catfind(129,2513
+sppage *sp_catroute(sp_catroute148,2910
+int sp_catown(171,3377
+
+db/a.h,340
+#define SP_A_H_2,16
+typedef struct spa spa;12,124
+struct spa 14,149
+	spallocf alloc;15,162
+	void *arg;arg16,179
+sp_allocinit(20,214
+sp_allocstd(26,313
+static inline void *sp_realloc(sp_realloc37,524
+static inline void *sp_malloc(sp_malloc41,629
+static inline char *sp_strdup(sp_strdup45,723
+static inline void sp_free(54,918
+
+db/sophia.h,667
+#define SOPHIA_H_2,18
+typedef void *(*spallocf)spallocf15,169
+typedef int (*spcmpf)spcmpf16,218
+	SPDIR,20,313
+	SPALLOC,21,347
+	SPCMP,22,381
+	SPPAGE,23,413
+	SPGC,24,440
+	SPGCF,25,462
+	SPGROW,26,487
+	SPMERGE,27,522
+	SPMERGEWM,28,544
+	SPMERGEFORCE,30,589
+	SPVERSION 32,621
+} spopt;33,660
+	SPO_RDONLY 36,677
+	SPO_RDWR 37,694
+	SPO_CREAT 38,711
+	SPO_SYNC 39,728
+	SPGT,43,763
+	SPGTE,44,770
+	SPLT,45,778
+	SPLTE46,785
+} sporder;47,792
+	uint32_t epoch;50,821
+	uint64_t psn;51,838
+	uint32_t repn;52,853
+	uint32_t repndb;53,869
+	uint32_t repnxfer;54,887
+	uint32_t catn;55,907
+	uint32_t indexn;56,923
+	uint32_t indexpages;57,941
+} spstat;58,963
+
+db/crc.c,558
+static const uint32_t crc_tableil8_o32[crc_tableil8_o3219,362
+static const uint32_t crc_tableil8_o40[crc_tableil8_o4055,3517
+static const uint32_t crc_tableil8_o48[crc_tableil8_o4891,6672
+static const uint32_t crc_tableil8_o56[crc_tableil8_o56127,9827
+static const uint32_t crc_tableil8_o64[crc_tableil8_o64163,12982
+static const uint32_t crc_tableil8_o72[crc_tableil8_o72199,16137
+static const uint32_t crc_tableil8_o80[crc_tableil8_o80235,19292
+static const uint32_t crc_tableil8_o88[crc_tableil8_o88271,22447
+uint32_t sp_crc32c(307,25602
+
+db/macro.h,194
+#define SP_MACRO_H_2,20
+#define sppacked 12,132
+#define spunused 13,173
+#define sphot 14,214
+#define splikely(15,249
+#define spunlikely(16,303
+#define spdiv(17,359
+#define spcast(18,401
+
+db/file.c,704
+int sp_fileexists(16,189
+int sp_filerm(22,286
+sp_mapsizeof(27,361
+sp_mapresize(36,514
+sp_map(45,676
+sp_unmap(54,848
+sp_mapopenof(65,991
+int sp_mapopen(105,1767
+int sp_mapnew(109,1854
+sp_mapsync(114,1982
+int sp_mapunlink(119,2051
+sp_mapcut(124,2130
+sp_fileclose(141,2413
+sp_filecomplete(159,2694
+int sp_mapunmap(181,3132
+int sp_mapclose(185,3185
+int sp_mapcomplete(198,3386
+int sp_mapensure(213,3687
+sp_logopenof(230,4070
+int sp_lognew(247,4369
+int sp_logcontinue(259,4662
+int sp_logclose(269,4929
+sp_logsync(274,5004
+int sp_logcomplete(278,5070
+int sp_logcompleteforce(286,5198
+int sp_logunlink(297,5404
+int sp_logflush(301,5465
+int sp_logrlb(333,5986
+int sp_logeof(344,6188
+
+db/task.h,311
+#define SP_TASK_H_2,19
+typedef struct sptask sptask;12,130
+struct sptask 14,161
+	volatile int run;15,177
+	void *arg;arg16,196
+	pthread_t id;17,208
+	pthread_mutex_t l;18,223
+	pthread_cond_t c;19,243
+sp_taskstart(23,284
+sp_taskstop(32,499
+sp_taskwakeup(45,747
+sp_taskwait(52,882
+sp_taskdone(64,1103
+
+db/cursor.c,566
+sp_pageopen(13,128
+static inline void sp_pageclose(28,448
+sp_pagesetlast(35,557
+sp_pageseek(42,706
+sp_pagesetlte(72,1301
+sp_pagesetgte(95,1763
+sp_pagenext(115,2167
+sp_pageprev(128,2441
+static inline void sp_first(142,2696
+sp_firstkey(153,2906
+static inline void sp_last(172,3429
+static inline int sp_lastkey(186,3698
+void sp_cursoropen(205,4233
+void sp_cursorclose(249,4945
+static inline void sp_reset(255,5015
+static inline int sp_next(261,5113
+static inline int sp_prev(350,6673
+int sp_iterate(439,8235
+sp_matchi(456,8485
+int sp_match(476,8898
+
+db/lock.h,253
+#define SP_LOCK_H_2,19
+typedef uint8_t spspinlock;12,130
+sp_lockinit(15,178
+sp_lockfree(20,247
+sp_lock(25,316
+sp_unlock(30,415
+typedef pthread_spinlock_t spspinlock;37,507
+sp_lockinit(40,566
+sp_lockfree(45,652
+sp_lock(50,738
+sp_unlock(55,817
+
+db/recover.c,217
+static inline int sp_dircreate(18,232
+sp_epochof(29,494
+static int sp_diropen(40,655
+static int sp_recoverdb(89,1852
+static int sp_recoverlog(207,5081
+static int sp_dirrecover(352,9317
+int sp_recover(414,10691
+
+db/cursor.h,486
+#define SP_CURSOR_H_2,21
+typedef struct spc spc;12,134
+enum spcsrc 14,159
+	SPCNONE,15,173
+	SPCI0,16,183
+	SPCI1,17,191
+	SPCP18,199
+#define SPCVDUP 21,209
+#define SPCPDUP 22,227
+typedef enum spcsrc spcsrc;24,246
+struct spc 26,275
+	spmagic m;27,288
+	sporder o;28,300
+	sp *s;s29,312
+	spii i0,30,320
+	spii i0, i1;30,320
+	int dup;31,334
+	sppageh *ph;ph32,385
+	sppage *p;p33,399
+	int pi;34,411
+	spvh *pv;pv35,448
+	int pvi;36,459
+	spcsrc vsrc;37,498
+	spref r;38,540
+
+db/sp.h,47
+#define SP_H_2,14
+#define _GNU_SOURCE 12,120
+
+db/e.c,19
+void sp_ve(12,109
+
+db/rep.c,273
+void sp_repinit(12,109
+void sp_repfree(21,234
+static inline int sp_repcmp(30,406
+int sp_repprepare(37,630
+spepoch *sp_repmatch(sp_repmatch63,1149
+spepoch *sp_repalloc(sp_repalloc73,1337
+void sp_repattach(93,1756
+void sp_repdetach(98,1843
+void sp_repset(104,1950
+
+db/rep.h,914
+#define SP_REP_H_2,18
+typedef struct spepoch spepoch;12,128
+typedef struct sprep sprep;13,160
+enum spepochtype 15,189
+	SPUNDEF,16,208
+	SPLIVE,17,218
+	SPXFER,18,227
+	SPDB19,236
+typedef enum spepochtype spepochtype;22,246
+#define SPRNONE 24,285
+#define SPRDB 25,303
+#define SPRDBI 26,321
+#define SPRLOG 27,339
+#define SPRLOGI 28,357
+struct spepoch 30,376
+	uint32_t epoch;31,393
+	uint32_t n;32,410
+	uint32_t ngc;33,450
+	uint32_t nupdate;34,493
+	spepochtype type;35,540
+	uint32_t recover;36,588
+	spfile log,37,628
+	spfile log, db;37,628
+	spspinlock lock;38,645
+	splist pages;39,678
+	splist link;40,728
+struct sprep 43,746
+	spa *a;a44,761
+	uint32_t epoch;45,770
+	splist l;46,787
+	int n;47,798
+	int ndb;48,806
+	int nxfer;49,816
+sp_repepoch(62,1148
+sp_repepochincrement(67,1212
+sp_replockall(72,1280
+sp_repunlockall(81,1451
+sp_replive(90,1630
+sp_repxfer(97,1775
+sp_repgc(108,1978
+
+db/crc.h,23
+#define SP_CRC_H_2,18
+
+db/i.c,402
+static inline int sp_iensure(12,109
+sp_ipagesize(23,353
+sp_ipagealloc(28,456
+int sp_iinit(36,600
+void sp_ifree(60,1060
+int sp_itruncate(76,1295
+sp_iminof(83,1418
+sp_imaxof(106,1905
+sp_ipagecmp(130,2397
+sp_ipageof(151,2872
+int sp_isetorget(171,3270
+int sp_idelraw(241,4970
+spv *sp_igetraw(sp_igetraw270,5718
+sp_iworldcmp(283,5979
+inline int sp_ilte(304,6466
+inline int sp_igte(337,7051
+
+db/merge.h,25
+#define SP_MERGE_H_2,20
+
+db/util.h,24
+#define SP_UTIL_H_2,19
+
+db/list.h,492
+#define SP_LIST_H_2,19
+typedef struct splist splist;12,130
+struct splist 14,161
+	splist *next,next15,177
+	splist *next, *prev;prev15,177
+sp_listinit(19,222
+sp_listappend(24,293
+sp_listunlink(32,427
+sp_listpush(38,528
+sp_listpop(46,663
+sp_listempty(53,775
+sp_listmerge(58,861
+sp_listreplace(70,1115
+#define sp_listlast(77,1237
+#define sp_listforeach(79,1277
+#define sp_listforeach_continue(82,1353
+#define sp_listforeach_safe(85,1425
+#define sp_listforeach_reverse(88,1518
+
+db/merge.c,905
+	uint32_t count;13,126
+	uint32_t psize;14,143
+	uint32_t bsize;15,160
+} spupdate0;16,177
+sp_mergeget0(19,210
+static inline int sp_merge0(44,756
+	uint32_t pi;172,3610
+	sppage *p;p173,3624
+	spepoch *s;s174,3636
+	uint32_t count;175,3664
+	uint32_t bsize;176,3681
+} spupdate;177,3698
+	int a_bsize,182,3792
+	int a_bsize, b_bsize;182,3792
+	int a_count,183,3815
+	int a_count, b_count;183,3815
+	int A,184,3838
+	int A, B;184,3838
+	spvh *a;a185,3849
+	spv *b;b186,3859
+	spref last;187,3868
+	spii i;188,3881
+	spepoch *x;x189,3890
+} spmerge;190,3903
+	splist split;193,3932
+	int count;194,3947
+} spsplit;195,3959
+sp_mergeget(198,3989
+sp_mergeinit(233,4743
+static inline int sp_mergenext(252,5184
+sp_splitinit(309,6284
+sp_splitfree(315,6373
+static inline int sp_split(323,6529
+static inline int sp_splitcommit(457,10131
+static inline int sp_mergeN(511,11508
+int sp_merge(545,12104
+
+db/gc.c,18
+int sp_gc(12,109
