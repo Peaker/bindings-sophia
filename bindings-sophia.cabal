@@ -23,10 +23,8 @@ extra-source-files:
   sophia/COPYRIGHT
   sophia/README
   sophia/makefile
-  sophia/db
   sophia/db/*.c
   sophia/db/*.h
-  sophia/test
   sophia/test/*.c
   sophia/test/*.h
   cbits/wrappers.c
