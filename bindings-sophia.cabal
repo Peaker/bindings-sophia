@@ -27,7 +27,6 @@ extra-source-files:
   sophia/db/*.h
   sophia/test/*.c
   sophia/test/*.h
-  cbits/wrappers.c
 
 --------------------------------------------------------------------------------
 
@@ -86,4 +85,4 @@ library
 
 source-repository head
   type:     git
-  location: git://github.com/Peaker/bindings-sophia.git
+  location: https://github.com/Peaker/bindings-sophia.git
