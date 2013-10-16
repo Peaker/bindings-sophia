@@ -1,5 +1,5 @@
 name:         bindings-sophia
-version:      0.1.0
+version:      0.2.0
 category:     Database
 
 author:       Eyal Lotem <eyal.lotem+sophia@gmail.com>
@@ -45,7 +45,7 @@ library
 
   build-depends:
     base          < 5,
-    bindings-DSL == 1.0.*
+    bindings-DSL >= 1.0.19
 
   include-dirs:
     sophia/db
