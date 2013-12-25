@@ -67,6 +67,8 @@ library
 
   cc-options: -g -Wall -O2
 
+  extra-libraries: pthread
+
 --------------------------------------------------------------------------------
 
 -- test-suite main
