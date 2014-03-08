@@ -24,6 +24,12 @@ enum spmagic {
 
 typedef enum spmagic spmagic;
 
+enum sptxn {
+	SPTSS, SPTMS
+};
+
+typedef enum sptxn sptxn;
+
 struct spenv {
 	spmagic m;
 	spe e;
@@ -45,44 +51,50 @@ struct spenv {
 
 struct sp {
 	spmagic m;
-	spenv *e;
+	spenv *env;
 	spa a;
 	sprep rep;
+	sptxn txn;          /* transaction mode: single or multi-stmt */
 	spi *i, i0, i1;
+	spi itxn;
 	int iskip;          /* skip second index during read */
 	uint64_t psn;       /* page sequence number */
 	spcat s;
+	spbatch lb;         /* log batch related */
 	volatile int stop;
 	sptask merger;
 	sprefset refs;      /* pre allocated key buffer (page merge) */
+	spfile lockdb;      /* per-process database lock */
 	int lockc;          /* incremental cursor lock */
 	spspinlock lockr;   /* repository lock */
 	spspinlock locks;   /* space lock */
 	spspinlock locki;   /* index lock */
+	spe e, em;          /* separate error contexts: fe and merger */
 };
 
-int sp_rotate(sp*);
+int sp_rotate(sp*, spe*);
 
 static inline int sp_active(sp *s) {
 	return !s->stop;
 }
 
-static inline int
-sp_e(sp *s, int type, ...) {
-	va_list args;
-	va_start(args, type);
-	sp_ve(&s->e->e, type, args);
-	va_end(args);
-	return -1;
+static inline spi*
+sp_ipair(sp *s) {
+	return (s->i == &s->i0 ? &s->i1 : &s->i0);
 }
 
-static inline int
-sp_ee(spenv *e, int type, ...) {
-	va_list args;
-	va_start(args, type);
-	sp_ve(&e->e, type, args);
-	va_end(args);
-	return -1;
+static inline spi*
+sp_iswap(sp *s) {
+	spi *old = s->i;
+	s->i = sp_ipair(s);
+	return old;
+}
+
+static inline void
+sp_iskipset(sp *s, int v) {
+	sp_lock(&s->locki);
+	s->iskip = v;
+	sp_unlock(&s->locki);
 }
 
 static inline void
@@ -107,23 +119,36 @@ sp_gunlock(sp *s) {
 	sp_unlock(&s->lockr);
 }
 
-static inline void
-sp_iskipset(sp *s, int v) {
-	sp_lock(&s->locki);
-	s->iskip = v;
-	sp_unlock(&s->locki);
+static inline int
+sp_evalidate(sp *s) {
+	return sp_echeck(&s->e) + sp_echeck(&s->em);
 }
 
-static inline spi*
-sp_ipair(sp *s) {
-	return (s->i == &s->i0 ? &s->i1 : &s->i0);
+static inline int
+sp_e(sp *s, int type, ...) {
+	va_list args;
+	va_start(args, type);
+	sp_vef(&s->e, type, args);
+	va_end(args);
+	return -1;
 }
 
-static inline spi*
-sp_iswap(sp *s) {
-	spi *old = s->i;
-	s->i = sp_ipair(s);
-	return old;
+static inline int
+sp_em(sp *s, int type, ...) {
+	va_list args;
+	va_start(args, type);
+	sp_vef(&s->em, type, args);
+	va_end(args);
+	return -1;
+}
+
+static inline int
+sp_ee(spenv *e, int type, ...) {
+	va_list args;
+	va_start(args, type);
+	sp_vef(&e->e, type, args);
+	va_end(args);
+	return -1;
 }
 
 #endif

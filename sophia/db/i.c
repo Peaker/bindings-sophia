@@ -79,6 +79,18 @@ int sp_itruncate(spi *i)
 	return sp_iinit(i, i->a, i->pagesize, i->cmp, i->cmparg);
 }
 
+int sp_ireset(spi *i)
+{
+	uint32_t p = 0;
+	while (p < i->icount) {
+		sp_free(i->a, i->i[p]);
+		p++;
+	}
+	sp_free(i->a, i->i);
+	i->i = NULL;
+	return sp_iinit(i, i->a, i->pagesize, i->cmp, i->cmparg);
+}
+
 static inline void*
 sp_iminof(spi *i, spipage *p, char *rkey, int size, uint32_t *idx)
 {
@@ -293,15 +305,15 @@ sp_iworldcmp(spi *i, char *rkey, int size)
 	/* inside index range */
 	if (l <= 0 && r >= 0)
 		return 0;
-	/* index min < key */
+	/* key > index min */
 	if (l == -1)
 		return -1;
-	/* index max > key */
+	/* key < index max */
 	assert(r == 1);
 	return 1;
 }
 
-inline int sp_ilte(spi *i, spii *ii, char *k, int size)
+int sp_ilte(spi *i, spii *ii, char *k, int size)
 {
 	if (spunlikely(i->count == 0)) {
 		sp_iinv(i, ii);
@@ -318,11 +330,16 @@ inline int sp_ilte(spi *i, spii *ii, char *k, int size)
 			break;
 		case  1:
 			ii->i = i;
-			ii->p = i->icount - 1;
-			ii->n = i->i[i->icount - 1]->count - 1;
+			ii->p = 0;
+			ii->n = 0;
 			break;
 		case  0:
-			assert(0);
+			if (spunlikely(a >= i->icount))
+				a = i->icount - 1;
+			ii->i = i;
+			ii->p = a;
+			ii->n = 0;
+			break;
 		}
 		return 0;
 	}
@@ -334,7 +351,7 @@ inline int sp_ilte(spi *i, spii *ii, char *k, int size)
 	return eq;
 }
 
-inline int sp_igte(spi *i, spii *ii, char *k, int size)
+int sp_igte(spi *i, spii *ii, char *k, int size)
 {
 	if (spunlikely(i->count == 0)) {
 		sp_iinv(i, ii);
@@ -355,7 +372,12 @@ inline int sp_igte(spi *i, spii *ii, char *k, int size)
 			sp_iinv(i, ii);
 			break;
 		case  0:
-			assert(0);
+			if (spunlikely(a >= i->icount))
+				a = i->icount - 1;
+			ii->i = i;
+			ii->p = a;
+			ii->n = i->i[a]->count - 1;
+			break;
 		}
 		return 0;
 	}

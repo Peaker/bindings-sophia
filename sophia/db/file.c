@@ -158,14 +158,12 @@ sp_fileclose(spfile *f)
 static inline int
 sp_filecomplete(spfile *f)
 {
-	if (f->creat == 0)
-		return 0;
-	/* remove .incomplete part */
 	f->creat = 0;
 	char path[1024];
 	snprintf(path, sizeof(path), "%s", f->file);
-	char *ext = strrchr(path, '.');
-	assert(ext != NULL);
+	char *ext = strstr(path, ".incomplete");
+	if (spunlikely(ext == NULL))
+		return 0;
 	*ext = 0;
 	int rc = rename(f->file, path);
 	if (spunlikely(rc == -1))
@@ -212,14 +210,15 @@ int sp_mapcomplete(spfile *f)
 
 int sp_mapensure(spfile *f, uint64_t size, float grow)
 {
-	if (splikely((f->used + size) < f->size))
+	if (splikely((f->used + size) <= f->size))
 		return 0;
 	int rc = sp_unmap(f);
 	if (spunlikely(rc == -1))
 		return -1;
-	long double nsz = f->size * grow;
+	uint64_t nsz = f->used + f->size * grow;
 	if (spunlikely(nsz < size))
-		nsz = size;
+		nsz = f->used + size;
+	assert(nsz >= (f->used + size));
 	rc = sp_mapresize(f, nsz);
 	if (spunlikely(rc == -1))
 		return -1;
@@ -298,18 +297,34 @@ int sp_logunlink(spfile *f) {
 	return sp_filerm(f->file);
 }
 
-int sp_logflush(spfile *f)
+int sp_logwrite(spfile *f, void *buf, size_t size)
 {
-	register struct iovec *v = f->iov;
+	size_t n = 0;
+	do {
+		ssize_t r;
+		do {
+			r = write(f->fd, (char*)buf + n, size - n);
+		} while (r == -1 && errno == EINTR);
+		if (r <= 0)
+			return -1;
+		n += r;
+	} while (n != size);
+	f->used += size;
+	return 0;
+}
+
+int sp_logput(spfile *f, spbatch *b)
+{
+	register struct iovec *v = b->iov;
 	register uint64_t size = 0;
-	register int n = f->iovc;
+	register int n = b->iovc;
 	do {
 		int r;
 		do {
 			r = writev(f->fd, v, n);
 		} while (r == -1 && errno == EINTR);
 		if (r < 0) {
-			f->iovc = 0;
+			b->iovc = 0;
 			return -1;
 		}
 		size += r;
@@ -326,13 +341,12 @@ int sp_logflush(spfile *f)
 		}
 	} while (n > 0);
 	f->used += size;
-	f->iovc = 0;
+	b->iovc = 0;
 	return 0;
 }
 
 int sp_logrlb(spfile *f)
 {
-	assert(f->iovc == 0);
 	int rc = ftruncate(f->fd, f->svp);
 	if (spunlikely(rc == -1))
 		return -1;
@@ -345,11 +359,51 @@ int sp_logeof(spfile *f)
 {
 	sp_filesvp(f);
 	speofh eof = { SPEOF };
-	sp_logadd(f, (char*)&eof, sizeof(eof));
-	int rc = sp_logflush(f);
+	int rc = sp_logwrite(f, &eof, sizeof(eof));
 	if (spunlikely(rc == -1)) {
 		sp_logrlb(f);
 		return -1;
 	}
 	return 0;
+}
+
+int sp_lockfile(spfile *f, char *path)
+{
+	f->creat = 0;
+	f->fd = open(path, O_CREAT|O_WRONLY, 0600);
+	if (spunlikely(f->fd == -1))
+		return -1;
+	f->file = sp_strdup(f->a, path);
+	if (spunlikely(f->file == NULL)) {
+		close(f->fd);
+		f->fd = -1;
+		return -1;
+	}
+	struct flock l;
+	memset(&l, 0, sizeof(l));
+	l.l_whence = SEEK_SET;
+	l.l_start = 0;
+	l.l_len = 0;
+	l.l_type = F_WRLCK;
+	int rc = fcntl(f->fd, F_SETLK, &l);
+	if (spunlikely(rc == -1)) {
+		sp_fileclose(f);
+		return 1;
+	}
+	return 0;
+}
+
+int sp_unlockfile(spfile *f)
+{
+	if (spunlikely(f->fd == -1))
+		return 0;
+	struct flock l;
+	memset(&l, 0, sizeof(l));
+	l.l_whence = SEEK_SET;
+	l.l_start = 0;
+	l.l_len = 0;
+	l.l_type = F_UNLCK;
+	fcntl(f->fd, F_SETLK, &l);
+	unlink(f->file);
+	return sp_fileclose(f);
 }
